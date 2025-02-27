@@ -1,0 +1,87 @@
+"""
+        class_index = chosen_dataloader.class_index
+        
+        img_out_dir = "/media/DATA_4TB/Yara/results/images"
+        gt_out_dir = "/media/DATA_4TB/Yara/results/gt"
+        est_out_dir = "/media/DATA_4TB/Yara/results/est"
+        print(model.summary())
+        os.makedirs(img_out_dir, exist_ok=True)
+        os.makedirs(gt_out_dir, exist_ok=True)
+        os.makedirs(est_out_dir, exist_ok=True)
+        start = time.time()
+        #print("START TIME!!!!!!")
+        # Do what you want with the outputs
+        for i, sample in enumerate(data):
+            #print(i)
+            if not is_first_run and sample["new_traj"]:
+                print("End of trajectory")
+
+            is_first_run = False
+
+            est = model([[sample], sample["camera"]]) # Run network to get estimates
+            """
+            
+            '''
+            s_est = est["semantic"][0, :, :, :]        # Estimate : [h,w,1] matrix with depth in meter
+            seg_est = tf.math.argmax(s_est, 2)
+            seg_gt = sample['semantic'][0, :, :, :]      # Ground truth : [h,w,1] matrix with depth in meter
+            #i_rgb = sample['RGB_im'][0, :, :, :]    # RGB image : [h,w,3] matrix with rgb channels ranging between 0 and 1
+            
+            seg_est = np.array(seg_est)
+            seg_gt = np.array(seg_gt)
+            #i_rgb = np.array(i_rgb)
+            '''
+            '''
+            seg_est = np.expand_dims(seg_est, axis = 2)
+            #print(seg_est)
+            
+            x1 = np.copy(seg_est)
+            x2 = np.copy(seg_est)
+            x3 = np.copy(seg_est)
+            
+            for key in class_index:
+                print(key)
+                x1[x1 == key] = class_index[key][0][0]
+                x2[x2 == key] = class_index[key][0][1]
+                x3[x3 == key] = class_index[key][0][2]
+                
+            img_seg = np.append(x1,x2, axis = 2)
+            img_seg = np.append(img_seg,x3, axis = 2)
+            
+            im = Image.fromarray(img_seg.astype(np.uint8))
+            '''
+            '''
+            im = Image.fromarray(seg_est.astype(np.uint8))
+            im.save(est_out_dir + "/sem_"+str(i)+".png")
+            '''
+            '''
+            x1 = np.copy(seg_gt)
+            x2 = np.copy(seg_gt)
+            x3 = np.copy(seg_gt)
+            
+            for key in class_index:
+                x1[x1 == key] = class_index[key][0][0]
+                x2[x2 == key] = class_index[key][0][1]
+                x3[x3 == key] = class_index[key][0][2]
+                
+            img_seg = np.append(x1,x2, axis = 2)
+            img_seg = np.append(img_seg,x3, axis = 2)
+            
+            #print(img_seg)
+            #print(np.shape(img_seg))
+            im = Image.fromarray(img_seg.astype(np.uint8))
+            '''
+            '''
+            seg_gt = np.squeeze(seg_gt)
+            im = Image.fromarray(seg_gt.astype(np.uint8))
+            im.save(gt_out_dir + "/sem_"+str(i)+".png")
+            '''
+            '''
+            i_rgb_rgb =  ( i_rgb  * 255.0).astype(np.uint8)
+            im3 = Image.fromarray(i_rgb_rgb)
+            im3.save(img_out_dir + "/img_"+str(i)+".png")
+            '''
+
+        end = time.time()
+        print("END TIME!!!!!!")
+        print(end-start)
