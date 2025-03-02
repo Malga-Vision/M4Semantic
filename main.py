@@ -107,7 +107,6 @@ if __name__ == '__main__':
         
         print("Length of the dataset = ", chosen_dataloader.length)
         if enable_validation:
-            #val_cbk = [CustomKittiValidationCallback(cmd, args=test_args)]
             val_cbk = [CustomAeroscapesValidationCallback(cmd, args=test_args)]
         else:
             val_cbk = []
@@ -117,8 +116,8 @@ if __name__ == '__main__':
             nbre_epochs = model_checkpoint_cbk.resume_epoch + (80000 // chosen_dataloader.length)
         else:
             nbre_epochs = (190000 // chosen_dataloader.length)
-            #nbre_epochs = (0 // chosen_dataloader.length)
         
+        nbre_epochs = 200
         model.fit(data, epochs= nbre_epochs + 1,
                   initial_epoch=model_checkpoint_cbk.resume_epoch,
                   callbacks=[tensorboard_cbk, model_checkpoint_cbk] + val_cbk)
