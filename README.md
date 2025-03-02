@@ -51,6 +51,7 @@ bash  scripts/1a-train-aeroscapes.sh path/to/desired/weights/location
 
 ### Evaluation and Pretrained weights
 The pre-trained weights can be downloaded from here and extracted:
+
 [weights trained on MidAir](https://drive.google.com/file/d/1C8uqqsv8sXYF15QvdLfw3G2S8JZ5vmQf/view?usp=sharing)
 
 [weights trained on Aeroscapes](https://drive.google.com/file/d/1C8uqqsv8sXYF15QvdLfw3G2S8JZ5vmQf/view?usp=sharing)
