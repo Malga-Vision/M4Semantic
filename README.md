@@ -34,7 +34,7 @@ Apply the semantic classes mapping on MidAir by running the following script:
 python scripts/data_class_mapping.py
 ```
 
-#### Aeroscapes [[2](#ref_2)]
+#### Aeroscapes [[2](#ref_1)]
 
 ## Reproducing paper results
 
@@ -69,3 +69,28 @@ where `dataset` can be `midair` or `aeroscapes`
 ## Prediction on your own images
 
 ## Baseline methods performance reproduction
+
+## References
+
+<a name="ref_1"></a>
+
+```
+[1]
+@inproceedings{Fonder2019MidAir,
+  author    = {Fonder, Michael and Van Droogenbroeck, Marc},
+  title     = {Mid-Air: A multi-modal dataset for extremely low altitude drone flights},
+  booktitle = {IEEE International Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)},
+  year      = {2019},
+  month     = {June}
+}
+
+[2]
+@inproceedings{aeroscapes,
+  title={Ensemble knowledge transfer for semantic segmentation},
+  author={Nigam, Ishan and Huang, Chen and Ramanan, Deva},
+  booktitle={2018 IEEE Winter Conference on Applications of Computer Vision (WACV)},
+  pages={1499--1508},
+  year={2018},
+  organization={IEEE}
+}
+```
