@@ -10,9 +10,14 @@ Please refer to [Co-SemDepth](https://github.com/Malga-Vision/Co-SemDepth/tree/m
 ## Citation
 
 ## Dependencies
-Starting from a fresh Anaconda environment, you can install the required depndencies to run our code with:
+Starting from a fresh Anaconda environment with python=3.8, you need first to install tensorflow 2.7:
 ```shell
-conda install -c conda-forge tensorflow-gpu=2.7 numpy pandas
+pip install tensorflow-gpu==2.7.1
+```
+
+Then, install the other required librarires:
+```shell
+pip install pandas pillow
 ```
 
 ### Datasets
@@ -62,13 +67,16 @@ bash  scripts/2-evaluate.sh dataset path/to/weights/location
 ```
 
 where `dataset` can be `midair` or `aeroscapes`
-### Other operations
 
-### Processing outputs
+## Prediction and visualizing the output
 
-## Prediction on your own images
+For prediction and saving the output depth and semantic segmentation maps run the following:
 
-## Baseline methods performance reproduction
+```shell
+python main.py --mode=predict --dataset="midair" --arch_depth=5 --ckpt_dir="weights/midair/" --records="data/midair/test_data/"
+```
+## Training and Evaluation on your own dataset
+In this case, you need to write the dataloader for your own dataset similar to `dataloaders/midair.py`. You also need to generate the data files by writing a data generator script similar to `scripts/midair-split-generator.py`. For depth training and prediction, your dataset should have per-frame camera location information to generate the data files.
 
 ## References
 
