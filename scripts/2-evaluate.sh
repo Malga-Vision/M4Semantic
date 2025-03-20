@@ -12,7 +12,7 @@ case "$dataset" in
     "midair")
         if [ -z "$2" ]
         then
-            savepath="weights/midair_weights"
+            savepath="weights/midair"
         fi
         db_seq_len=""
         data="data/midair/test_data"
@@ -21,7 +21,7 @@ case "$dataset" in
      "aeroscapes")
         if [ -z "$2" ]
         then
-            savepath="weights/aeroscapes_weights"
+            savepath="weights/aeroscapes"
         fi
         db_seq_len=""
         data="data/aeroscapes/test_data"
