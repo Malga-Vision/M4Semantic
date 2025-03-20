@@ -38,8 +38,9 @@ Apply the semantic classes mapping on MidAir by running the following script:
 ```shell
 python scripts/data_class_mapping.py
 ```
-
 #### Aeroscapes [[2](#ref_1)]
+
+Download aeroscapes from the [link](https://drive.google.com/file/d/1WmXcm0IamIA0QPpyxRfWKnicxZByA60v/view) and place it inside "datasets" folder
 
 ## Reproducing paper results
 
