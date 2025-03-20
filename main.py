@@ -31,10 +31,8 @@ from tensorflow import keras
 import numpy as np
 import dataloaders as dl
 from callbacks import *
-#from m4depth_network_v2 import *
-#from m4depth_network_time import *
-from m4depth_network_aeroscapes import *
-#from m4depth_network_depth import *
+from m4semantic_network import *
+#from m4semantic_network_aeroscapes import *
 from metrics import *
 import time
 from PIL import Image
@@ -96,12 +94,10 @@ if __name__ == '__main__':
             profile_batch=0, embeddings_freq=0, embeddings_metadata=None)
         model_checkpoint_cbk = CustomCheckpointCallback(os.path.join(ckpt_dir,"train"), resume_training=True)
         
-        #lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(initial_learning_rate=0.0001, decay_steps=50000, decay_rate=0.5)
-        #opt = tf.keras.optimizers.Adam(learning_rate=lr_schedule)
-        opt = tf.keras.optimizers.Adam(learning_rate=0.00001)
+        
+        opt = tf.keras.optimizers.Adam(learning_rate=0.0001)
 
         
-        #model.compile(optimizer=opt, metrics=[tf.keras.metrics.MeanIoU(num_classes = chosen_dataloader.class_count)], run_eagerly = True)
         model.compile(optimizer=opt, metrics=[tf.keras.metrics.MeanIoU(num_classes = chosen_dataloader.class_count)])
         
         
@@ -111,14 +107,10 @@ if __name__ == '__main__':
         else:
             val_cbk = []
 
-        # Adapt number of steps depending on desired usecase
-        if cmd.mode == 'finetune':
-            nbre_epochs = model_checkpoint_cbk.resume_epoch + (80000 // chosen_dataloader.length)
-        else:
-            nbre_epochs = (190000 // chosen_dataloader.length)
         
-        nbre_epochs = 200
-        model.fit(data, epochs= nbre_epochs + 1,
+        
+        nbre_epochs = 60
+        model.fit(data, epochs= nbre_epochs,
                   initial_epoch=model_checkpoint_cbk.resume_epoch,
                   callbacks=[tensorboard_cbk, model_checkpoint_cbk] + val_cbk)
         print("MODEL SUMMARY ", model.summary())
@@ -138,23 +130,16 @@ if __name__ == '__main__':
 
         model = M4Depth(nbre_levels=nbre_levels, ablation_settings=model_opts.ablation_settings, num_classes = chosen_dataloader.class_count)
 
-        #model_checkpoint_cbk = CustomCheckpointCallback(weights_dir, resume_training=True)
+        
         model_checkpoint_cbk = CustomCheckpointCallback(weights_dir)
-        #model.compile(metrics=[AbsRelError(),
-                               #SqRelError(),
-                               #RootMeanSquaredError(),
-                               #RootMeanSquaredLogError(),
-                               #ThresholdRelError(1), ThresholdRelError(2), ThresholdRelError(3)])
+        
                                
         
         
         model.compile(metrics = [tf.keras.metrics.MeanIoU(num_classes = chosen_dataloader.class_count)])
-        #model.compile(metrics=[tf.keras.metrics.IoU(num_classes = chosen_dataloader.class_count, target_class_ids=[0])])
-        #model.compile(metrics = [tf.keras.metrics.IoU(num_classes = chosen_dataloader.class_count, target_class_ids = [6])])
-        start = time.time()
+        
         metrics = model.evaluate(data, callbacks=[model_checkpoint_cbk])
-        end = time.time()
-        print("EXECUTION TIME = ", end-start)
+        
         print("METRICS: ",metrics)
         # Keep track of the computed performance
         if cmd.mode == 'validation':
@@ -176,13 +161,10 @@ if __name__ == '__main__':
     elif cmd.mode == "predict":
         chosen_dataloader.get_dataset("predict", model_opts.dataloader_settings, batch_size=1)
         data = chosen_dataloader.dataset
-        print("DEPTH = ", nbre_levels)
+        
         model = M4Depth(nbre_levels=nbre_levels, ablation_settings=model_opts.ablation_settings, num_classes = chosen_dataloader.class_count)
         model.compile()
-        '''
-        ckpt_dir = "weights/paper_v2_nodepth/"
-        '''
-        print("CKPT DIR = ", ckpt_dir)
+        
         model_checkpoint_cbk = CustomCheckpointCallback(os.path.join(ckpt_dir, "best"), resume_training=True)
         
         i=0
@@ -193,25 +175,20 @@ if __name__ == '__main__':
         model.predict(first_sample, callbacks=[model_checkpoint_cbk])
 
         is_first_run = True
-        """
-        start = time.time()
-        while(1):
-            if (time.time() - start)%1000 == 0:
-                print("----")
-                
-        """
+        
         class_index = chosen_dataloader.class_index
         
-        img_out_dir = "/media/DATA_4TB/Yara/results_aeroscapes/images"
-        gt_out_dir = "/media/DATA_4TB/Yara/results_aeroscapes/gt_ind"
-        est_out_dir = "/media/DATA_4TB/Yara/results_aeroscapes/est_ind"
         print(model.summary())
+        
+        img_out_dir = "results/images"
+        gt_out_dir = "results/sem_gt"
+        est_out_dir = "results/sem_est"
+        
         os.makedirs(img_out_dir, exist_ok=True)
         os.makedirs(gt_out_dir, exist_ok=True)
         os.makedirs(est_out_dir, exist_ok=True)
         start = time.time()
         #print("START TIME!!!!!!")
-        # Do what you want with the outputs
         for i, sample in enumerate(data):
             #print(i)
             if not is_first_run and sample["new_traj"]:
@@ -231,7 +208,7 @@ if __name__ == '__main__':
             seg_est = np.array(seg_est)
             seg_gt = np.array(seg_gt)
             i_rgb = np.array(i_rgb)
-            '''
+            
             
             seg_est = np.expand_dims(seg_est, axis = 2)
             #print(seg_est)
@@ -252,10 +229,6 @@ if __name__ == '__main__':
             im = Image.fromarray(img_seg.astype(np.uint8))
             im.save(est_out_dir + "/sem_"+str(i)+".png")
             
-            '''
-            im = Image.fromarray(seg_est.astype(np.uint8))
-            im.save(est_out_dir + "/sem_"+str(i)+".png")
-            '''
             
             x1 = np.copy(seg_gt)
             x2 = np.copy(seg_gt)
@@ -274,16 +247,12 @@ if __name__ == '__main__':
             im = Image.fromarray(img_seg.astype(np.uint8))
             im.save(gt_out_dir + "/sem_"+str(i)+".png")
             
-            '''
-            seg_gt = np.squeeze(seg_gt)
-            im = Image.fromarray(seg_gt.astype(np.uint8))
-            im.save(gt_out_dir + "/sem_"+str(i)+".png")
-            '''
+            
             
             i_rgb_rgb =  ( i_rgb  * 255.0).astype(np.uint8)
             im3 = Image.fromarray(i_rgb_rgb)
             im3.save(img_out_dir + "/img_"+str(i)+".png")
-            '''
+            
 
         end = time.time()
         print("END TIME!!!!!!")

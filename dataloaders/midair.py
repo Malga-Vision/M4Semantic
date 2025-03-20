@@ -11,19 +11,7 @@ class DataLoaderMidAir(DataLoaderGeneric):
         #self.class_count = 14
         self.class_count = 7
         self.depth_type = "map"
-        """
-        self.class_index = {
-        0: [(127, 175, 230), 'Sky'],
-        1: [(75, 163, 185),'water plane'],
-        2: [(50, 128, 0),  'Trees'],
-        3: [(117, 97, 97),  'Dirt Ground'],
-        4: [(53, 94, 59), 'Ground vegetation'],   
-        5: [(70, 70, 70),   'Rocks'],
-        6: [(128, 64, 128),  'Road'],
-        7: [(64, 64, 128),  'man-made construction'],
-        8: [(128, 64, 64),  'others']
-        }
-        """
+        
         self.class_index = {
         0: [(127, 175, 230), 'Sky'],
         1: [(75, 163, 185),'water plane'],
