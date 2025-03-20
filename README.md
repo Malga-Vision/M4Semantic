@@ -71,10 +71,16 @@ where `dataset` can be `midair` or `aeroscapes`
 
 ## Prediction and visualizing the output
 
-For prediction and saving the output depth and semantic segmentation maps run the following:
+For prediction and saving the output depth and semantic segmentation maps run the following for MidAir:
 
 ```shell
 python main.py --mode=predict --dataset="midair" --arch_depth=5 --ckpt_dir="weights/midair/" --records="data/midair/test_data/"
+```
+
+for Aeroscapes:
+
+```shell
+python main.py --mode=predict --dataset="aeroscapes" --arch_depth=5 --ckpt_dir="weights/aeroscapes/" --records="data/aeroscapes/test_data/"
 ```
 ## Training and Evaluation on your own dataset
 In this case, you need to write the dataloader for your own dataset similar to `dataloaders/midair.py`. You also need to generate the data files by writing a data generator script similar to `scripts/midair-split-generator.py`. For depth training and prediction, your dataset should have per-frame camera location information to generate the data files.
