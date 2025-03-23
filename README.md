@@ -87,6 +87,10 @@ python main.py --mode=predict --dataset="aeroscapes" --arch_depth=5 --ckpt_dir="
 ## Training and Evaluation on your own dataset
 In this case, you need to write the dataloader for your own dataset similar to `dataloaders/midair.py`. You also need to generate the data files by writing a data generator script similar to `scripts/midair-split-generator.py`. For depth training and prediction, your dataset should have per-frame camera location information to generate the data files.
 
+## Baseline Methods for semantic segmentation
+
+TO BE ADDED
+
 ## References
 
 <a name="ref_1"></a>
