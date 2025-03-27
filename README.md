@@ -8,7 +8,18 @@ M4Semantic is a lightweight deep architecture for semantic segmentation given an
 Please refer to [Co-SemDepth](https://github.com/Malga-Vision/Co-SemDepth/tree/main) for the implementation of the joint architecture.
 
 ## Citation
-
+If you use this code, please cite our paper:
+```
+@misc{alaaeldin2025cosemdepthfastjointsemantic,
+      title={Co-SemDepth: Fast Joint Semantic Segmentation and Depth Estimation on Aerial Images}, 
+      author={Yara AlaaEldin and Francesca Odone},
+      year={2025},
+      eprint={2503.17982},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2503.17982}, 
+}
+```
 ## Dependencies
 Starting from a fresh Anaconda environment with python=3.8, you need first to install tensorflow 2.7:
 ```shell
