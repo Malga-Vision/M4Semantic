@@ -100,7 +100,7 @@ In this case, you need to write the dataloader for your own dataset similar to `
 
 ## Baseline Methods for semantic segmentation
 
-TO BE ADDED
+[TO BE ADDED]
 
 ## References
 
