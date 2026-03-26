@@ -1,3 +1,5 @@
+# Copyright Co-SemDepth authors 2025. All rights reserved.
+# ==============================================================================
 
 import tensorflow as tf
 import cv2
