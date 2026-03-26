@@ -10,14 +10,12 @@ Please refer to [Co-SemDepth](https://github.com/Malga-Vision/Co-SemDepth/tree/m
 ## Citation
 If you use this code, please cite our paper:
 ```
-@misc{alaaeldin2025cosemdepthfastjointsemantic,
+@inproceedings{cosemdepth,
       title={Co-SemDepth: Fast Joint Semantic Segmentation and Depth Estimation on Aerial Images}, 
       author={Yara AlaaEldin and Francesca Odone},
-      year={2025},
-      eprint={2503.17982},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2503.17982}, 
+      booktitle={SAC 2026 conference},
+      howpublished = {\url{https://doi.org/10.48550/arXiv.2503.17982}},
+      
 }
 ```
 ## Dependencies
