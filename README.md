@@ -15,7 +15,6 @@ If you use this code, please cite our paper:
       author={Yara AlaaEldin and Francesca Odone},
       booktitle={SAC 2026 conference},
       howpublished = {\url{https://doi.org/10.48550/arXiv.2503.17982}},
-      
 }
 ```
 ## Dependencies
